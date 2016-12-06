@@ -1,0 +1,29 @@
+body {
+  background-color: black;
+  color: white;
+  margin: 5% auto auto auto;
+}
+
+h1 {
+  font-size: 60px;
+}
+
+#main {
+  padding: 50px;
+}
+
+#image {
+  width: 10%;
+}
+
+p {
+  font-size: 30px;
+}
+
+#credit {
+  font-size: 15px;
+}
+
+a {
+  text-decoration: none!important;
+}
