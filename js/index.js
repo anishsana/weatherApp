@@ -1,15 +1,15 @@
 var temp;
 
-$.getJSON("http://ip-api.com/json/?callback=", function(loc) {
-  $('#location').text(loc.city + ', ' + loc.region + ', ' + loc.country);
-  var weatherURL = "http://api.openweathermap.org/data/2.5/weather?lat=" + loc.lat + "&lon=" + loc.lon + "&APPID=97eb08adc0a00cacc8ad542e6edb219a";
+var ipapiURL = "http://freegeoip.net/json/?callback=?";
+
+$.getJSON(ipapiURL, function(loc) {
+  $('#location').text(loc.city + ', ' + loc.region_code + ', ' + loc.country_name);
+  var weatherURL = "http://api.openweathermap.org/data/2.5/weather?lat=" + loc.latitude + "&lon=" + loc.longitude + "&APPID=97eb08adc0a00cacc8ad542e6edb219a&callback=?";
 
   $.getJSON(weatherURL, function(a) {
-    console.log(a);
     temp = a.main.temp;
     var firstCelcius = Math.round(a.main.temp - 273.15);
     $("#temp").html(firstCelcius);
-    //console.log(Date.now());
     var timeOfDay = dayOrNight(a.sys.sunrise, a.sys.sunset);
     var code = a.weather[0].id;
     var img = "http://openweathermap.org/img/w/";
