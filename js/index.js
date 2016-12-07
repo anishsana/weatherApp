@@ -1,6 +1,6 @@
 var temp;
 
-$.get("http://ip-api.com/json", function(loc) {
+$.getJSON("http://ip-api.com/json/?callback=", function(loc) {
   $('#location').text(loc.city + ', ' + loc.region + ', ' + loc.country);
   var weatherURL = "http://api.openweathermap.org/data/2.5/weather?lat=" + loc.lat + "&lon=" + loc.lon + "&APPID=97eb08adc0a00cacc8ad542e6edb219a";
 
