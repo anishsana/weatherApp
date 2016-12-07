@@ -1,10 +1,10 @@
 var temp;
 
-var ipapiURL = "http://freegeoip.net/json/?callback=?";
+var ipapiURL = "https://geoip.nekudo.com/api/";
 
 $.getJSON(ipapiURL, function(loc) {
-  $('#location').text(loc.city + ', ' + loc.region_code + ', ' + loc.country_name);
-  var weatherURL = "http://api.openweathermap.org/data/2.5/weather?lat=" + loc.latitude + "&lon=" + loc.longitude + "&APPID=97eb08adc0a00cacc8ad542e6edb219a&callback=?";
+  $('#location').text(loc.city + ', ' + loc.country.name);
+  var weatherURL = "http://api.openweathermap.org/data/2.5/weather?lat=" + loc.location.latitude + "&lon=" + loc.location.longitude + "&APPID=97eb08adc0a00cacc8ad542e6edb219a&callback=?";
 
   $.getJSON(weatherURL, function(a) {
     temp = a.main.temp;
