@@ -27,3 +27,12 @@ p {
 a {
   text-decoration: none!important;
 }
+
+canvas {
+	margin-top: 20px;
+	padding-left: 0;
+    padding-right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}

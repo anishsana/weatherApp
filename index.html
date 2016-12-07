@@ -4,13 +4,8 @@
   <meta charset="UTF-8">
   <title>Weather App</title>
   <meta http-equiv="Access-Control-Allow-Origin" content="*">
-  
-  
   <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css'>
-
-      <link rel="stylesheet" href="css/style.css">
-
-  
+  <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
@@ -24,18 +19,18 @@
   </div>
   <div class="container-fluid" id="main">
     <p class="text-center" id="location">Location</p>
-    <p class="text-center"><span id="temp">Temperature</span><a href="#" id="c"> &deg;C</a></p>
+    <p class="text-center"><span id="temp">Temperature</span><a href="#" id="f"> &deg;F</a></p>
     <p class="text-center" id="weather">Weather</p>
-    <img class="img-responsive center-block" id="image"></img>
+    <figure class="icons">
+  <canvas id="canvas" width="128" height="128"></canvas>
   </div>
   <div class="container-fluid">
     <p class="text-center" id="credit">By <a href="https://anishsana.github.io/" target="_blank">Anish Sana</a></p>
   </div>
 </body>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js'></script>
-
-    <script src="js/index.js"></script>
-
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js'></script>
+  <script src="https://rawgithub.com/darkskyapp/skycons/master/skycons.js"></script>
+  <script src="js/index.js"></script>
 </body>
 </html>

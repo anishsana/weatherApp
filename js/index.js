@@ -1,105 +1,70 @@
 var temp;
 
 var ipapiURL = "https://geoip.nekudo.com/api/";
+var icons = new Skycons({"color": "white"});
 
 $.getJSON(ipapiURL, function(loc) {
   $('#location').text(loc.city + ', ' + loc.country.name);
-  var weatherURL = "http://api.openweathermap.org/data/2.5/weather?lat=" + loc.location.latitude + "&lon=" + loc.location.longitude + "&APPID=97eb08adc0a00cacc8ad542e6edb219a&callback=?";
+  var weatherURL = "https://api.darksky.net/forecast/aef84c0a6f4c1c63e4e23b326c8def1d/" + loc.location.latitude + "," + loc.location.longitude + "?callback=?";
 
   $.getJSON(weatherURL, function(a) {
-    temp = a.main.temp;
-    var firstCelcius = Math.round(a.main.temp - 273.15);
-    $("#temp").html(firstCelcius);
-    var timeOfDay = dayOrNight(a.sys.sunrise, a.sys.sunset);
-    var code = a.weather[0].id;
-    var img = "http://openweathermap.org/img/w/";
-    img += imgDisplay(code, timeOfDay);
-    $("#image").attr("src", img);
-  var weather = capitalizeWeather(a.weather[0].description);  $("#weather").html(weather);
+    temp = a.currently.temperature;
+    var firstFahrenheit = Math.round(a.currently.temperature);
+    $("#temp").html(firstFahrenheit);
+    $("#canvas").attr("id", a.currently.icon);
+    canvasDisplay(a.currently.icon);
+    $("#weather").html(a.currently.summary);
   });
 });
 
 $('body').on('click', '#c', function(e) {
-  var fahrenheit = Math.round(((temp - 273.15) * 9 / 5) + 32);
+  var fahrenheit = Math.round(temp);
   $("#temp").html(fahrenheit);
   $("#c").html(" &deg;F");
   $("#c").attr("id", "f");
 });
 
 $('body').on('click', '#f', function(e) {
-  var celcius = Math.round(temp - 273.15);
+  var celcius = Math.round((temp - 32) * 5 / 9);
   $("#temp").html(celcius);
   $("#f").html(" &deg;C");
   $("#f").attr("id", "c");
 });
 
-function imgDisplay(code, time) {
-  var symbol;
-  if (time === true) {
-    if (code >= 200 && code <= 232) {
-      symbol = "11";
-    } else if (code >= 300 && code <= 321) {
-      symbol = "09";
-    } else if (code >= 500 && code <= 504) {
-      symbol = "10";
-    } else if (code == 511 || (code >= 600 && code <= 622)) {
-      symbol = "13";
-    } else if (code >= 520 && code <= 531) {
-      symbol = "09";
-    } else if (code >= 701 && code <= 781) {
-      symbol = "50";
-    } else if (code == 801) {
-      symbol = "02";
-    } else if (code == 802) {
-      symbol = "03";
-    } else if (code == 803 || code == 804) {
-      symbol = "04";
-    } else {
-      symbol = "01";
-    }
-    return symbol + "d.png";
-  } else {
-    {
-    if (code >= 200 && code <= 232) {
-      symbol = "11";
-    } else if (code >= 300 && code <= 321) {
-      symbol = "09";
-    } else if (code >= 500 && code <= 504) {
-      symbol = "10";
-    } else if (code == 511 || (code >= 600 && code <= 622)) {
-      symbol = "13";
-    } else if (code >= 520 && code <= 531) {
-      symbol = "09";
-    } else if (code >= 701 && code <= 781) {
-      symbol = "50";
-    } else if (code == 801) {
-      symbol = "02";
-    } else if (code == 802) {
-      symbol = "03";
-    } else if (code == 803 || code == 804) {
-      symbol = "04";
-    } else {
-      symbol = "01";
-    }
-    return symbol + "n.png";
-  }
+function canvasDisplay(icon) {
+  var i = icon;
+  switch(i) {
+    case "clear-day":
+      icons.set("clear-day", Skycons.CLEAR_DAY);
+      break;
+    case "clear-night":
+      icons.set("clear-night", Skycons.CLEAR_NIGHT);
+      break;
+    case "partly-cloudy-day":
+      icons.set("partly-cloudy-day", Skycons.PARTLY_CLOUDY_DAY);
+      break;
+    case "partly-cloudy-night":
+      icons.set("partly-cloudy-night", Skycons.PARTLY_CLOUDY_NIGHT);
+      break;
+    case "cloudy":
+      icons.set("cloudy", Skycons.CLOUDY);
+      break;
+    case "rain":
+      icons.set("rain", Skycons.RAIN);
+      break;
+    case "sleet":
+      icons.set("sleet", Skycons.SLEET);
+      break;
+    case "snow":
+      icons.set("snow", Skycons.SNOW);
+      break;
+    case "wind":
+      icons.set("wind", Skycons.WIND);
+      break;
+    case "fog":
+      icons.set("fog", Skycons.FOG);
+      break;
   }
 }
 
-function dayOrNight(sunrise, sunset) {
-  var currentTime = Date.now() / 1000;
-  if (currentTime >= sunrise && currentTime < sunset) {
-    return true;
-  } else {
-    return false;
-  }
-}
-
-function capitalizeWeather(description) {
-  description = description.split(" ");
-  for (var i in description) {
-    description[i] = description[i].charAt(0).toUpperCase() + description[i].slice(1);
-  }  
-  description = description.join(" ");
-  return description;
-}
+icons.play();
